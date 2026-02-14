@@ -1,3 +1,15 @@
+# [1.2.0](https://github.com/jarv/mqtt/compare/v1.1.1...v1.2.0) (2026-02-14)
+
+
+### Bug Fixes
+
+* arg pass to mise ([08abeb4](https://github.com/jarv/mqtt/commit/08abeb4e39fbe7f5ca6364001fa1b995e579df56))
+
+
+### Features
+
+* adds version option ([32e282b](https://github.com/jarv/mqtt/commit/32e282bb9b4ac5b93a229f51297cb917095a6009))
+
 ## [1.1.1](https://github.com/jarv/mqtt/compare/v1.1.0...v1.1.1) (2026-02-14)
 
 
