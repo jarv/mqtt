@@ -9,6 +9,19 @@ import (
 	"github.com/mochi-mqtt/server/v2/packets"
 )
 
+// authHook wraps auth.Hook to log failed authentication attempts.
+type authHook struct {
+	auth.Hook
+}
+
+func (h *authHook) OnConnectAuthenticate(cl *mqtt.Client, pk packets.Packet) bool {
+	ok := h.Hook.OnConnectAuthenticate(cl, pk)
+	if !ok {
+		slog.Warn("MQTT authentication failed", "username", string(pk.Connect.Username), "remote", cl.Net.Remote)
+	}
+	return ok
+}
+
 // Broker wraps the mochi-mqtt server.
 type Broker struct {
 	server   *mqtt.Server
@@ -32,7 +45,7 @@ func (b *Broker) Start(onPublish func(topic string, payload []byte)) error {
 	})
 
 	// Auth hook — accept only connections with the configured credentials.
-	if err := b.server.AddHook(new(auth.Hook), &auth.Options{
+	if err := b.server.AddHook(new(authHook), &auth.Options{
 		Ledger: &auth.Ledger{
 			Auth: auth.AuthRules{
 				{Username: auth.RString(b.username), Password: auth.RString(b.password), Allow: true},
