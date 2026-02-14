@@ -28,13 +28,15 @@ type Broker struct {
 	addr     string
 	username string
 	password string
+	logger   *slog.Logger
 }
 
-func NewBroker(addr, username, password string) *Broker {
+func NewBroker(addr, username, password string, logger *slog.Logger) *Broker {
 	return &Broker{
 		addr:     addr,
 		username: username,
 		password: password,
+		logger:   logger,
 	}
 }
 
@@ -42,6 +44,7 @@ func NewBroker(addr, username, password string) *Broker {
 func (b *Broker) Start(onPublish func(topic string, payload []byte)) error {
 	b.server = mqtt.New(&mqtt.Options{
 		InlineClient: true,
+		Logger:       b.logger,
 	})
 
 	// Auth hook — accept only connections with the configured credentials.

@@ -88,7 +88,7 @@ func runServe(args []string) {
 	sub.StartCleanup(context.Background(), 15*time.Minute)
 
 	// Start embedded MQTT broker
-	broker := NewBroker(*mqttAddr, mqttUsername, mqttPassword)
+	broker := NewBroker(*mqttAddr, mqttUsername, mqttPassword, slog.Default())
 	if err := broker.Start(sub.HandleMessage); err != nil {
 		slog.Error("failed to start MQTT broker", "err", err)
 		os.Exit(1)
