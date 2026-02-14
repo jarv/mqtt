@@ -38,7 +38,7 @@ func (b *Broker) Start(onPublish func(topic string, payload []byte)) error {
 				{Username: auth.RString(b.username), Password: auth.RString(b.password), Allow: true},
 			},
 			ACL: auth.ACLRules{
-				{Username: auth.RString(b.username), Filters: auth.Filters{"devices/#": auth.ReadWrite}},
+				{Username: auth.RString(b.username), Filters: auth.Filters{"msh/#": auth.ReadWrite}},
 			},
 		},
 	}); err != nil {
@@ -51,8 +51,8 @@ func (b *Broker) Start(onPublish func(topic string, payload []byte)) error {
 		return err
 	}
 
-	// Subscribe inline to all device status topics.
-	if err := b.server.Subscribe("devices/+/status", 1, func(_ *mqtt.Client, _ packets.Subscription, pk packets.Packet) {
+	// Subscribe inline to all Meshtastic JSON topics.
+	if err := b.server.Subscribe("msh/+/2/json/#", 1, func(_ *mqtt.Client, _ packets.Subscription, pk packets.Packet) {
 		onPublish(pk.TopicName, pk.Payload)
 	}); err != nil {
 		return err

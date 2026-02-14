@@ -101,19 +101,16 @@ function buildNoLocationEl() {
 }
 
 // --- Formatters ---
-function formatBatteryEl(mv) {
+function formatBatteryEl(pct) {
   const wrap = document.createElement("div");
   wrap.style.cssText = "display:flex; align-items:center; gap:8px;";
 
-  if (!mv) {
+  if (pct == null || pct === 0) {
     wrap.innerHTML = `<span style="color:var(--color-site-muted)">N/A</span>`;
     return wrap;
   }
 
-  const pct = Math.max(
-    0,
-    Math.min(100, Math.round(((mv - 3300) / (4200 - 3300)) * 100)),
-  );
+  pct = Math.max(0, Math.min(100, Math.round(pct)));
   const track = document.createElement("div");
   track.className = "bat-bar-track";
   track.style.cssText = "flex:1; min-width:60px;";
@@ -183,12 +180,7 @@ function buildInfoContent(device) {
     ["Lon", formatCoord(device.lon, "E", "W")],
     ["Alt", device.alt ? device.alt.toFixed(1) + " m" : "—"],
     ["Speed", device.speed ? device.speed.toFixed(1) + " km/h" : "0.0 km/h"],
-    [
-      "Sats",
-      `${device.sats || 0}  /  HDOP ${device.hdop ? device.hdop.toFixed(1) : "—"}`,
-    ],
-    ["RSSI", device.rssi ? device.rssi.toFixed(1) + " dBm" : "—"],
-    ["SNR", device.snr ? device.snr.toFixed(1) : "—"],
+    ["Sats", `${device.sats || 0}`],
   ];
 
   rows.forEach(([label, value]) => {
@@ -221,7 +213,7 @@ function buildInfoContent(device) {
     "color:var(--color-site-muted); min-width:48px; flex-shrink:0;";
   batLabel.textContent = "Battery";
   batRow.appendChild(batLabel);
-  batRow.appendChild(formatBatteryEl(device.battery_mv));
+  batRow.appendChild(formatBatteryEl(device.battery_level));
   frag.appendChild(batRow);
 
   // Last seen
