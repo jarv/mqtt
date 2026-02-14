@@ -1,3 +1,10 @@
+# [1.1.0](https://github.com/jarv/mqtt/compare/v1.0.0...v1.1.0) (2026-02-14)
+
+
+### Features
+
+* Adds multi-arch builds ([c035b96](https://github.com/jarv/mqtt/commit/c035b96155dae666ace127895f534a805b6f60c8))
+
 # 1.0.0 (2026-02-14)
 
 
