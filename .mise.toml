@@ -1,5 +1,5 @@
 [tools]
-golang = "1.23.12"
+golang = "1.24"
 golangci-lint = "2.9.0"
 nodejs = "22.14.0"
 watchexec = "latest"
