@@ -55,7 +55,7 @@ run = "go build -ldflags '-w -X github.com/jarv/mqtt/version.Version=dev' -o mqt
 depends = ['build-assets']
 dir = "mqtt"
 run = """
-VERSION=${1}
+VERSION="{{arg(i=0, default='dev')}}"
 LDFLAGS="-w -s -X github.com/jarv/mqtt/version.Version=v${VERSION}"
 CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -ldflags "$LDFLAGS" -o mqtt-linux-amd64 .
 CGO_ENABLED=0 GOOS=linux GOARCH=arm64 go build -ldflags "$LDFLAGS" -o mqtt-linux-arm64 .
