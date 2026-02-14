@@ -1,0 +1,4 @@
+node_modules/
+mqtt/dist/
+mqtt/mqtt
+*.db

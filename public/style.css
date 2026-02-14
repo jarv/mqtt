@@ -1,0 +1,155 @@
+@import "tailwindcss";
+
+@theme {
+  /* Light mode palette (jarv.org) */
+  --color-site-bg: #f5f5f0;
+  --color-site-surface: #f8f9fa;
+  --color-site-border: #e9ecef;
+  --color-site-text: #1d1d1d;
+  --color-site-muted: #6c757d;
+  --color-site-accent: #007bff;
+  --color-site-accent-hover: #0056b3;
+  --color-site-heading: #1d1d1d;
+  --color-site-online: #28a745;
+  --color-site-offline: #6c757d;
+
+  /* Dark mode overrides applied via .dark class on <html> */
+  --color-dark-bg: #333333;
+  --color-dark-surface: #2d2d2d;
+  --color-dark-border: #444444;
+  --color-dark-text: #dddddd;
+  --color-dark-muted: #93a1a1;
+  --color-dark-accent: #61dafb;
+  --color-dark-accent-hover: #21b8e8;
+  --color-dark-heading: #eeeeee;
+  --color-dark-online: #57d97a;
+  --color-dark-offline: #93a1a1;
+
+  --font-sans: atkinson, "Open Sans", sans-serif;
+  --font-mono: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
+}
+
+@font-face {
+  font-family: atkinson;
+  src: url("https://jarv.org/font/AtkinsonHyperlegible-Regular.woff2");
+  font-display: swap;
+}
+@font-face {
+  font-family: atkinson;
+  src: url("https://jarv.org/font/AtkinsonHyperlegible-Bold.woff2");
+  font-weight: 700;
+  font-display: swap;
+}
+
+/* --- Base --- */
+body {
+  font-family: var(--font-sans);
+  background-color: var(--color-site-bg);
+  color: var(--color-site-text);
+  font-size: 1rem;
+  line-height: 1.6;
+}
+
+/* --- Dark mode --- */
+@media (prefers-color-scheme: dark) {
+  body {
+    background-color: var(--color-dark-bg);
+    color: var(--color-dark-text);
+  }
+  .card {
+    background-color: var(--color-dark-surface) !important;
+    border-color: var(--color-dark-border) !important;
+  }
+  .card-label {
+    color: var(--color-dark-muted) !important;
+  }
+  .card-value {
+    color: var(--color-dark-text) !important;
+  }
+  .card-heading {
+    color: var(--color-dark-heading) !important;
+  }
+  .card-divider {
+    border-color: var(--color-dark-border) !important;
+  }
+  .card-map-divider {
+    background-color: var(--color-dark-border) !important;
+  }
+  .status-online {
+    color: var(--color-dark-online) !important;
+  }
+  .status-offline {
+    color: var(--color-dark-offline) !important;
+  }
+  .seen-text {
+    color: var(--color-dark-muted) !important;
+  }
+  header {
+    background-color: #000 !important;
+    border-color: var(--color-dark-border) !important;
+  }
+  .header-title {
+    color: var(--color-dark-heading) !important;
+  }
+  .header-meta {
+    color: var(--color-dark-muted) !important;
+  }
+  .no-devices {
+    color: var(--color-dark-muted) !important;
+  }
+  .ws-status {
+    color: var(--color-dark-muted) !important;
+  }
+  .bat-bar-bg {
+    background-color: var(--color-dark-border) !important;
+  }
+}
+
+/* --- Map tile image --- */
+.map-tile {
+  display: block;
+  width: 256px;
+  height: 256px;
+  flex-shrink: 0;
+  object-fit: none;
+}
+
+/* --- Battery bar --- */
+.bat-bar-track {
+  height: 8px;
+  border-radius: 4px;
+  overflow: hidden;
+  background-color: var(--color-site-border);
+  flex: 1;
+}
+.bat-bar-fill {
+  height: 100%;
+  border-radius: 4px;
+  background-color: var(--color-site-accent);
+  transition: width 0.3s ease;
+}
+@media (prefers-color-scheme: dark) {
+  .bat-bar-fill {
+    background-color: var(--color-dark-accent);
+  }
+}
+
+/* --- Marker dot on tile --- */
+.tile-marker {
+  position: absolute;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background-color: var(--color-site-accent);
+  border: 2px solid #fff;
+  box-shadow: 0 0 0 2px var(--color-site-accent);
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+}
+@media (prefers-color-scheme: dark) {
+  .tile-marker {
+    background-color: var(--color-dark-accent);
+    border-color: var(--color-dark-surface);
+    box-shadow: 0 0 0 2px var(--color-dark-accent);
+  }
+}

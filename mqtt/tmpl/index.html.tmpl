@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>MQTT Device Tracker</title>
+    <link rel="stylesheet" href="/static/style.css?{{ .CacheBust }}" />
+  </head>
+  <body class="min-h-screen flex flex-col">
+
+    <!-- Header -->
+    <header class="border-b px-6 py-3 flex items-center justify-between shrink-0"
+      style="background-color: var(--color-site-bg); border-color: var(--color-site-border)">
+      <div class="flex items-center gap-3">
+        <span class="font-bold text-sm uppercase tracking-widest header-title"
+          style="color: var(--color-site-text)">MQTT Tracker</span>
+      </div>
+      <div class="flex items-center gap-6 text-xs header-meta" style="color: var(--color-site-muted)">
+        <span id="clock"></span>
+        <span id="ws-status" class="ws-status" style="color: var(--color-site-muted)">Connecting...</span>
+      </div>
+    </header>
+
+    <!-- Device list -->
+    <main class="flex-1 overflow-y-auto py-6 px-4">
+      <div>
+
+        <!-- No devices placeholder -->
+        <div id="no-devices" class="no-devices flex flex-col items-center justify-center py-32 text-center"
+          style="color: var(--color-site-muted)">
+          <div class="text-3xl mb-4">◌</div>
+          <div class="text-base font-semibold mb-1">No devices online</div>
+          <div class="text-sm">Waiting for MQTT messages on <code style="font-family: var(--font-mono)">devices/+/status</code></div>
+        </div>
+
+        <!-- Device rows (filled by JS) -->
+        <div id="device-list" class="hidden space-y-4 flex flex-col items-center"></div>
+
+      </div>
+    </main>
+
+    <script src="/static/main.js?{{ .CacheBust }}"></script>
+  </body>
+</html>

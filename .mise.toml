@@ -1,0 +1,46 @@
+[tools]
+golang = "1.23.12"
+golangci-lint = "2.9.0"
+nodejs = "22.14.0"
+watchexec = "latest"
+sqlc = "latest"
+
+[tasks.lint]
+depends = ['eslint', 'prettier', 'golangci-lint']
+
+[tasks.eslint]
+run = "npx eslint src/"
+
+[tasks.golangci-lint]
+dir = "mqtt"
+run = "golangci-lint run ./..."
+
+[tasks.prettier]
+run = "npx prettier src/ --write"
+
+[tasks.sqlc]
+dir = "mqtt"
+run = "sqlc generate"
+
+[tasks.build]
+depends = ['build-assets']
+env = { CGO_ENABLED = '0', GOOS = 'linux', GOARCH = 'amd64' }
+dir = "mqtt"
+run = "go build -ldflags '-w' -o mqtt ."
+
+[tasks.build-assets]
+hide = true
+run = "npm run build"
+
+[tasks.run]
+depends = ['build-assets']
+sources = [
+  'mqtt/**/*.{tmpl,go}',
+  'src/**/*',
+  'package-lock.json',
+]
+dir = "mqtt"
+run = "go run ."
+
+[tasks.watch]
+run = "mise watch -r run"

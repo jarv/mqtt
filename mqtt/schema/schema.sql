@@ -1,0 +1,16 @@
+CREATE TABLE IF NOT EXISTS devices (
+    id          TEXT PRIMARY KEY,
+    lat         REAL NOT NULL DEFAULT 0,
+    lon         REAL NOT NULL DEFAULT 0,
+    alt         REAL NOT NULL DEFAULT 0,
+    speed       REAL NOT NULL DEFAULT 0,
+    course      REAL NOT NULL DEFAULT 0,
+    sats        INTEGER NOT NULL DEFAULT 0,
+    hdop        REAL NOT NULL DEFAULT 0,
+    battery_mv  INTEGER NOT NULL DEFAULT 0,
+    rssi        REAL NOT NULL DEFAULT 0,
+    snr         REAL NOT NULL DEFAULT 0,
+    online      INTEGER NOT NULL DEFAULT 1,
+    last_seen   DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    created_at  DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
