@@ -61,7 +61,11 @@ func runServe(args []string) {
 		slog.Error("failed to open database", "err", err)
 		os.Exit(1)
 	}
-	defer sqlDB.Close()
+	defer func() {
+		if err := sqlDB.Close(); err != nil {
+			slog.Error("failed to close database", "err", err)
+		}
+	}()
 
 	// Run schema migrations
 	if _, err := sqlDB.Exec(schema); err != nil {
@@ -82,7 +86,11 @@ func runServe(args []string) {
 		slog.Error("failed to start MQTT broker", "err", err)
 		os.Exit(1)
 	}
-	defer broker.Stop()
+	defer func() {
+		if err := broker.Stop(); err != nil {
+			slog.Error("failed to stop broker", "err", err)
+		}
+	}()
 
 	// Start HTTP server (blocks)
 	app := NewApp(*addr, cm, sub)

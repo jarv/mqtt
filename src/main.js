@@ -9,7 +9,8 @@ function latLonToTileF(lat, lon, zoom) {
   const n = Math.pow(2, zoom);
   const xf = ((lon + 180) / 360) * n;
   const latRad = (lat * Math.PI) / 180;
-  const yf = ((1 - Math.log(Math.tan(latRad) + 1 / Math.cos(latRad)) / Math.PI) / 2) * n;
+  const yf =
+    ((1 - Math.log(Math.tan(latRad) + 1 / Math.cos(latRad)) / Math.PI) / 2) * n;
   return { xf, yf };
 }
 
@@ -58,7 +59,6 @@ function buildMapEl(lat, lon) {
   // Load all 9 tiles and draw onto canvas once all are ready
   const ctx = canvas.getContext("2d");
   const subs = ["a", "b", "c"];
-  let loaded = 0;
   const imgs = [];
 
   for (let dy = -1; dy <= 1; dy++) {
@@ -74,19 +74,19 @@ function buildMapEl(lat, lon) {
       const canvasY = (dy + 1) * 256 - clipY;
       imgs.push({ img, canvasX, canvasY });
       img.onload = () => {
-        loaded++;
         ctx.drawImage(img, canvasX, canvasY, 256, 256);
         // Re-raise dot above canvas on every draw
         wrapper.appendChild(dot);
       };
-      img.onerror = () => { loaded++; };
+      img.onerror = () => {};
       img.src = url;
     }
   }
 
   // Draw any already-cached tiles immediately
   imgs.forEach(({ img, canvasX, canvasY }) => {
-    if (img.complete && img.naturalWidth) ctx.drawImage(img, canvasX, canvasY, 256, 256);
+    if (img.complete && img.naturalWidth)
+      ctx.drawImage(img, canvasX, canvasY, 256, 256);
   });
 
   return wrapper;
@@ -94,7 +94,8 @@ function buildMapEl(lat, lon) {
 
 function buildNoLocationEl() {
   const el = document.createElement("div");
-  el.style.cssText = "width:256px; height:256px; flex-shrink:0; display:flex; align-items:center; justify-content:center;";
+  el.style.cssText =
+    "width:256px; height:256px; flex-shrink:0; display:flex; align-items:center; justify-content:center;";
   el.innerHTML = `<span style="font-size:12px; color:var(--color-site-muted)">No GPS fix</span>`;
   return el;
 }
@@ -109,7 +110,10 @@ function formatBatteryEl(mv) {
     return wrap;
   }
 
-  const pct = Math.max(0, Math.min(100, Math.round(((mv - 3300) / (4200 - 3300)) * 100)));
+  const pct = Math.max(
+    0,
+    Math.min(100, Math.round(((mv - 3300) / (4200 - 3300)) * 100)),
+  );
   const track = document.createElement("div");
   track.className = "bat-bar-track";
   track.style.cssText = "flex:1; min-width:60px;";
@@ -120,7 +124,8 @@ function formatBatteryEl(mv) {
 
   const label = document.createElement("span");
   label.className = "card-value";
-  label.style.cssText = "font-size:12px; min-width:32px; text-align:right; color:var(--color-site-text)";
+  label.style.cssText =
+    "font-size:12px; min-width:32px; text-align:right; color:var(--color-site-text)";
   label.textContent = pct + "%";
 
   wrap.appendChild(track);
@@ -147,11 +152,13 @@ function buildInfoContent(device) {
 
   // Header row: device ID + status
   const header = document.createElement("div");
-  header.style.cssText = "display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;";
+  header.style.cssText =
+    "display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;";
 
   const title = document.createElement("div");
   title.className = "card-heading";
-  title.style.cssText = "font-weight:700; font-size:15px; color:var(--color-site-text);";
+  title.style.cssText =
+    "font-weight:700; font-size:15px; color:var(--color-site-text);";
   title.textContent = device.id;
 
   const status = document.createElement("div");
@@ -166,7 +173,8 @@ function buildInfoContent(device) {
   // Divider
   const hr = document.createElement("div");
   hr.className = "card-divider";
-  hr.style.cssText = "border-top:1px solid var(--color-site-border); margin-bottom:10px;";
+  hr.style.cssText =
+    "border-top:1px solid var(--color-site-border); margin-bottom:10px;";
   frag.appendChild(hr);
 
   // Data rows
@@ -175,14 +183,18 @@ function buildInfoContent(device) {
     ["Lon", formatCoord(device.lon, "E", "W")],
     ["Alt", device.alt ? device.alt.toFixed(1) + " m" : "—"],
     ["Speed", device.speed ? device.speed.toFixed(1) + " km/h" : "0.0 km/h"],
-    ["Sats", `${device.sats || 0}  /  HDOP ${device.hdop ? device.hdop.toFixed(1) : "—"}`],
+    [
+      "Sats",
+      `${device.sats || 0}  /  HDOP ${device.hdop ? device.hdop.toFixed(1) : "—"}`,
+    ],
     ["RSSI", device.rssi ? device.rssi.toFixed(1) + " dBm" : "—"],
     ["SNR", device.snr ? device.snr.toFixed(1) : "—"],
   ];
 
   rows.forEach(([label, value]) => {
     const row = document.createElement("div");
-    row.style.cssText = "display:flex; justify-content:space-between; align-items:baseline; font-size:13px; margin-bottom:4px;";
+    row.style.cssText =
+      "display:flex; justify-content:space-between; align-items:baseline; font-size:13px; margin-bottom:4px;";
 
     const lEl = document.createElement("span");
     lEl.className = "card-label";
@@ -201,10 +213,12 @@ function buildInfoContent(device) {
 
   // Battery row (special — has a bar)
   const batRow = document.createElement("div");
-  batRow.style.cssText = "display:flex; justify-content:space-between; align-items:center; font-size:13px; margin-bottom:4px; gap:8px;";
+  batRow.style.cssText =
+    "display:flex; justify-content:space-between; align-items:center; font-size:13px; margin-bottom:4px; gap:8px;";
   const batLabel = document.createElement("span");
   batLabel.className = "card-label";
-  batLabel.style.cssText = "color:var(--color-site-muted); min-width:48px; flex-shrink:0;";
+  batLabel.style.cssText =
+    "color:var(--color-site-muted); min-width:48px; flex-shrink:0;";
   batLabel.textContent = "Battery";
   batRow.appendChild(batLabel);
   batRow.appendChild(formatBatteryEl(device.battery_mv));
@@ -213,7 +227,8 @@ function buildInfoContent(device) {
   // Last seen
   const seen = document.createElement("div");
   seen.className = "seen-text";
-  seen.style.cssText = "margin-top:10px; font-size:11px; color:var(--color-site-muted);";
+  seen.style.cssText =
+    "margin-top:10px; font-size:11px; color:var(--color-site-muted);";
   seen.textContent = `Last seen: ${formatLastSeen(device.last_seen)}`;
   frag.appendChild(seen);
 
@@ -238,21 +253,27 @@ function createDeviceRow(device) {
   // Info panel — fixed width matching the map column
   const info = document.createElement("div");
   info.className = "device-info";
-  info.style.cssText = "width:256px; flex-shrink:0; padding:16px; box-sizing:border-box;";
+  info.style.cssText =
+    "width:256px; flex-shrink:0; padding:16px; box-sizing:border-box;";
   info.appendChild(buildInfoContent(device));
   row.appendChild(info);
 
   // Divider
   const divider = document.createElement("div");
   divider.className = "card-map-divider";
-  divider.style.cssText = "width:1px; background-color:var(--color-site-border); flex-shrink:0;";
+  divider.style.cssText =
+    "width:1px; background-color:var(--color-site-border); flex-shrink:0;";
   row.appendChild(divider);
 
   // Map cell — centres the 256×256 map element both axes
   const mapCell = document.createElement("div");
   mapCell.className = "device-map";
-  mapCell.style.cssText = "display:flex; align-items:center; justify-content:center; width:256px; flex-shrink:0;";
-  const mapEl = (device.lat && device.lon) ? buildMapEl(device.lat, device.lon) : buildNoLocationEl();
+  mapCell.style.cssText =
+    "display:flex; align-items:center; justify-content:center; width:256px; flex-shrink:0;";
+  const mapEl =
+    device.lat && device.lon
+      ? buildMapEl(device.lat, device.lon)
+      : buildNoLocationEl();
   mapCell.appendChild(mapEl);
   row.appendChild(mapCell);
 
@@ -269,7 +290,10 @@ function updateDeviceRow(row, device) {
 
   const mapCell = row.querySelector(".device-map");
   if (mapCell) {
-    const newMap = (device.lat && device.lon) ? buildMapEl(device.lat, device.lon) : buildNoLocationEl();
+    const newMap =
+      device.lat && device.lon
+        ? buildMapEl(device.lat, device.lon)
+        : buildNoLocationEl();
     mapCell.innerHTML = "";
     mapCell.appendChild(newMap);
   }
@@ -325,7 +349,9 @@ function connectWebSocket() {
       const msg = JSON.parse(event.data);
       if (msg.type === "devices") {
         devices = {};
-        (msg.data || []).forEach((d) => { devices[d.id] = d; });
+        (msg.data || []).forEach((d) => {
+          devices[d.id] = d;
+        });
         renderDevices();
       }
     } catch (e) {
@@ -337,7 +363,9 @@ function connectWebSocket() {
 // --- Clock ---
 function startClock() {
   const el = document.getElementById("clock");
-  const tick = () => { el.textContent = new Date().toUTCString().replace(" GMT", " UTC"); };
+  const tick = () => {
+    el.textContent = new Date().toUTCString().replace(" GMT", " UTC");
+  };
   tick();
   setInterval(tick, 1000);
 }
