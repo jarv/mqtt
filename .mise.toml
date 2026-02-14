@@ -8,7 +8,12 @@ sqlc = "latest"
 [tasks.ci]
 depends = ['build-assets', 'test', 'lint-ci']
 
+[tasks.npm-install]
+hide = true
+run = "npm ci"
+
 [tasks.test]
+depends = ['build-assets']
 dir = "mqtt"
 run = "go test -v ./..."
 
@@ -19,18 +24,22 @@ depends = ['eslint', 'prettier', 'golangci-lint']
 depends = ['eslint', 'prettier-check', 'golangci-lint']
 
 [tasks.eslint]
-run = "npx eslint src/"
+depends = ['npm-install']
+run = "node_modules/.bin/eslint src/"
 
 [tasks.golangci-lint]
+depends = ['build-assets']
 dir = "mqtt"
 run = "golangci-lint run ./..."
 
 [tasks.prettier]
-run = "npx prettier src/ --write"
+depends = ['npm-install']
+run = "node_modules/.bin/prettier src/ --write"
 
 [tasks.prettier-check]
 hide = true
-run = "npx prettier src/ --check"
+depends = ['npm-install']
+run = "node_modules/.bin/prettier src/ --check"
 
 [tasks.sqlc]
 dir = "mqtt"
@@ -44,6 +53,7 @@ run = "go build -ldflags '-w' -o mqtt ."
 
 [tasks.build-assets]
 hide = true
+depends = ['npm-install']
 run = "npm run build"
 
 [tasks.run]
