@@ -1,3 +1,10 @@
+## [1.3.1](https://github.com/jarv/mqtt/compare/v1.3.0...v1.3.1) (2026-02-14)
+
+
+### Bug Fixes
+
+* fixes some logs that are not formatted as json ([01bfcb9](https://github.com/jarv/mqtt/commit/01bfcb92a3ff3592a442da2ef96a15f2acadf5ac))
+
 # [1.3.0](https://github.com/jarv/mqtt/compare/v1.2.0...v1.3.0) (2026-02-14)
 
 
