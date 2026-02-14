@@ -1,3 +1,10 @@
+# [1.3.0](https://github.com/jarv/mqtt/compare/v1.2.0...v1.3.0) (2026-02-14)
+
+
+### Features
+
+* adds logging for auth failures ([0ab8311](https://github.com/jarv/mqtt/commit/0ab8311792f534fddc6fb7dc9d231f295a6efa3a))
+
 # [1.2.0](https://github.com/jarv/mqtt/compare/v1.1.1...v1.2.0) (2026-02-14)
 
 
