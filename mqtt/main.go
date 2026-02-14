@@ -4,20 +4,27 @@ import (
 	"context"
 	"database/sql"
 	"flag"
+	"fmt"
 	"log/slog"
 	"os"
 	"time"
 
 	"github.com/jarv/mqtt/db"
+	"github.com/jarv/mqtt/version"
 	_ "github.com/ncruces/go-sqlite3/driver"
 	_ "github.com/ncruces/go-sqlite3/embed"
 )
 
 func main() {
-	// Subcommand dispatch
-	if len(os.Args) > 1 && os.Args[1] == "simulate" {
-		runSimulate(os.Args[2:])
-		return
+	if len(os.Args) > 1 {
+		switch os.Args[1] {
+		case "simulate":
+			runSimulate(os.Args[2:])
+			return
+		case "-version", "--version":
+			fmt.Println(version.Version)
+			return
+		}
 	}
 
 	runServe(os.Args[1:])

@@ -7,7 +7,7 @@
     [
       "@semantic-release/exec",
       {
-        "prepareCmd": "mise run build-release",
+        "prepareCmd": "mise run build-release ${nextRelease.version}",
         "publishCmd": "echo 'Version ${nextRelease.version} published'"
       }
     ],
