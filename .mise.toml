@@ -51,6 +51,14 @@ env = { CGO_ENABLED = '0', GOOS = 'linux', GOARCH = 'amd64' }
 dir = "mqtt"
 run = "go build -ldflags '-w' -o mqtt ."
 
+[tasks.build-release]
+depends = ['build-assets']
+dir = "mqtt"
+run = """
+CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -ldflags '-w -s' -o mqtt-linux-amd64 .
+CGO_ENABLED=0 GOOS=linux GOARCH=arm64 go build -ldflags '-w -s' -o mqtt-linux-arm64 .
+"""
+
 [tasks.build-assets]
 hide = true
 depends = ['npm-install']

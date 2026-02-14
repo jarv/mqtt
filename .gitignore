@@ -1,4 +1,5 @@
 node_modules/
 mqtt/dist/
 mqtt/mqtt
+mqtt/mqtt-linux*
 *.db

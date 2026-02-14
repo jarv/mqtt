@@ -7,14 +7,17 @@
     [
       "@semantic-release/exec",
       {
-        "prepareCmd": "mise run build",
+        "prepareCmd": "mise run build-release",
         "publishCmd": "echo 'Version ${nextRelease.version} published'"
       }
     ],
     [
       "@semantic-release/github",
       {
-        "assets": [{ "path": "mqtt/mqtt", "label": "mqtt-linux-amd64" }]
+        "assets": [
+          { "path": "mqtt/mqtt-linux-amd64", "label": "mqtt-linux-amd64" },
+          { "path": "mqtt/mqtt-linux-arm64", "label": "mqtt-linux-arm64" }
+        ]
       }
     ],
     [
