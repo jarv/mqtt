@@ -1,3 +1,10 @@
+## [1.1.1](https://github.com/jarv/mqtt/compare/v1.1.0...v1.1.1) (2026-02-14)
+
+
+### Bug Fixes
+
+* update for meshtastic broker ([aad5720](https://github.com/jarv/mqtt/commit/aad572042be5e1419a07c5f260990a09702624ed))
+
 # [1.1.0](https://github.com/jarv/mqtt/compare/v1.0.0...v1.1.0) (2026-02-14)
 
 
